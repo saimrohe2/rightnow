@@ -1,0 +1,16 @@
+# Node.js dependencies (if your frontend uses npm/yarn)
+node_modules/
+
+# Local environment variables
+.env
+
+# Build output directory
+build/
+dist/
+
+# Operating System Files
+.DS_Store
+Thumbs.db
+
+# CRUCIAL: Ignore the backend secret if it somehow appears here
+server/serviceAccountKey.json
