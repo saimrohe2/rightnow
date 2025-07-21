@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Your Profile - RightNow</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="background-animation"></div>
+  <div class="overlay"></div>
+
+  <!-- This is the standard, corrected header that should be on all pages -->
+  <header class="main-header">
+    <div class="logo"><a href="index.html" style="text-decoration:none; color:inherit;">⚖️ RightNow</a></div>
+    <nav class="main-nav">
+      <button id="menu-toggle-btn" class="menu-toggle" aria-controls="nav-links" aria-expanded="false">
+        <span class="sr-only">Menu</span><span class="hamburger-bar"></span><span class="hamburger-bar"></span><span class="hamburger-bar"></span>
+      </button>
+      <div id="nav-links" class="nav-links">
+        <a href="blog.html" class="nav-item">Blog</a>
+        <hr class="nav-divider">
+        <div id="logged-out-view" class="auth-buttons nav-item">
+          <a href="login.html" class="auth-link">Login</a>
+          <a href="signup.html" class="auth-link">Sign Up</a>
+        </div>
+        <div id="logged-in-view" class="profile-section nav-item" style="display: none;">
+          <button id="profile-btn" class="profile-btn">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+          </button>
+          <div id="profile-dropdown" class="profile-dropdown">
+            <div class="user-info">
+              <p>Signed in as:</p>
+              <strong id="user-email">Loading...</strong>
+            </div>
+            <a href="pricing.html" id="upgrade-link" class="upgrade-link" style="display: none;">✨ Upgrade to Premium</a>
+            <a href="#" id="logout-btn" class="logout-link">Logout</a>
+          </div>
+        </div>
+      </div>
+    </nav>
+  </header>
+
+  <main class="main-content">
+    <div class="card static-page-card">
+      <h1>Your Profile</h1>
+      <div class="profile-details">
+        <p><strong>Email:</strong> <span id="profile-email">Loading...</span></p>
+        <p><strong>Subscription:</strong> <span id="profile-status" class="status-badge">Loading...</span></p>
+      </div>
+
+      <hr class="profile-divider">
+
+      <h2>Saved Rights</h2>
+      <div id="saved-rights-container">
+        <!-- Saved rights will be loaded here by JavaScript -->
+        <p class="loading-text">Loading your saved rights...</p>
+      </div>
+    </div>
+  </main>
+
+  <footer class="main-footer">
+    <div class="footer-links">
+      <a href="privacy.html">Privacy Policy</a>
+      <a href="terms.html">Terms & Conditions</a>
+      <a href="contact.html">Contact Us</a>
+    </div>
+    <p>© 2025 RightNow. All rights reserved.</p>
+  </footer>
+
+  <script src="auth-state.js" type="module"></script>
+  <script src="profile.js" type="module"></script>
+</body>
+</html>

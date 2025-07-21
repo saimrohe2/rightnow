@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>Your Dashboard - RightNow</title>
+  <meta name="description" content="Manage your account and access your settings." />
+
+  <meta name="robots" content="noindex, nofollow">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;800&display=swap" rel="stylesheet">
+  
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="background-animation"></div>
+  <div class="overlay"></div>
+
+  <header class="main-header">
+    <a href="index.html" class="logo">⚖️ RightNow</a>
+    <nav class="main-nav">
+      <button id="menu-toggle-btn" class="menu-toggle" aria-controls="nav-links" aria-expanded="false">
+        <span class="sr-only">Menu</span>
+        <span class="hamburger-bar"></span>
+        <span class="hamburger-bar"></span>
+        <span class="hamburger-bar"></span>
+      </button>
+      <div id="nav-links" class="nav-links">
+        <a href="blog.html" class="nav-item">Blog</a>
+        <hr class="nav-divider">
+        <div id="logged-out-view" class="auth-buttons nav-item hidden">
+          <a href="login.html" class="auth-link">Login</a>
+          <a href="signup.html" class="auth-link">Sign Up</a>
+        </div>
+        <div id="logged-in-view" class="profile-section nav-item">
+          <button id="profile-btn" class="profile-btn">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+          </button>
+          <div id="profile-dropdown" class="profile-dropdown">
+            <div class="user-info">
+              <p>Signed in as:</p>
+              <strong id="user-email">Loading...</strong>
+            </div>
+            <div class="dropdown-actions">
+              <button id="logout-btn" class="logout-link">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+                Logout
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </nav>
+  </header>
+
+  <main class="main-content">
+    <div class="dashboard-layout">
+      <aside class="dashboard-sidebar">
+        <nav class="dashboard-nav">
+          <a href="#settings" class="dashboard-nav-item active" data-view="settings-view">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 0 2.4l-.15.08a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.38a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1 0-2.4l.15-.08a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+            <span>Settings</span>
+          </a>
+        </nav>
+      </aside>
+
+      <div class="dashboard-content">
+        <section id="settings-view" class="dashboard-view active"> <h1>Settings</h1>
+          <div class="card settings-card">
+            <h2>Change Password</h2>
+            <form id="change-password-form" class="auth-form">
+              <div class="form-group">
+                <label for="current-password">Current Password</label>
+                <input type="password" id="current-password" name="current-password" autocomplete="current-password" required>
+              </div>
+              <div class="form-group">
+                <label for="new-password">New Password</label>
+                <input type="password" id="new-password" name="new-password" autocomplete="new-password" minlength="6" required>
+              </div>
+              <button type="submit" class="btn-glow">Update Password</button>
+            </form>
+          </div>
+          
+          <div class="card settings-card danger-zone">
+            <h2>Danger Zone</h2>
+            <p>Deleting your account is a permanent action and cannot be undone.</p>
+            <button id="delete-account-btn" class="btn-danger">Delete My Account</button>
+          </div>
+        </section>
+      </div>
+    </div>
+  </main>
+
+  <div id="share-modal" class="modal-overlay hidden">
+    <div class="modal-content card" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+      <button id="close-modal-btn" class="close-modal" aria-label="Close modal">&times;</button>
+      <h2 id="modal-title">Download or Share Result</h2>
+      <p class="modal-description">Share your illuminated rights with others or save them for your records.</p>
+      
+      <div class="modal-actions">
+          <button id="download-pdf-btn" class="btn-glow">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+              Download as PDF
+          </button>
+          <div class="share-link-wrapper">
+            <label for="share-link-input" class="sr-only">Sharable Link</label>
+            <input type="text" id="share-link-input" readonly value="Generating link...">
+            <button id="copy-link-btn" title="Copy link">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+            </button>
+          </div>
+      </div>
+    </div>
+  </div>
+
+  <footer class="main-footer">
+    <div class="footer-links">
+      <a href="privacy.html">Privacy Policy</a>
+      <a href="terms.html">Terms & Conditions</a>
+      <a href="contact.html">Contact Us</a>
+    </div>
+    <p>© 2025 RightNow. All rights reserved.</p>
+  </footer>
+
+  <script src="auth-state.js" type="module"></script>
+  <script src="dashboard.js" type="module"></script>
+</body>
+</html>

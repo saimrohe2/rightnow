@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>Login - RightNow</title>
+  <meta name="description" content="Sign in to your RightNow account to access your saved rights, search history, and premium features." />
+
+  <meta property="og:title" content="Login - RightNow" />
+  <meta property="og:description" content="Sign in to your RightNow account to access premium features." />
+  <meta property="og:image" content="https://www.yoursite.com/images/social-login-banner.jpg" /> <meta property="og:url" content="https://www.yoursite.com/login.html" /> <meta property="og:type" content="website" />
+  <meta name="twitter:card" content="summary_large_image" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;800&display=swap" rel="stylesheet">
+  
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="background-animation"></div>
+  <div class="overlay"></div>
+
+  <header class="main-header">
+    <a href="index.html" class="logo">⚖️ RightNow</a>
+    <nav class="main-nav">
+      <button id="menu-toggle-btn" class="menu-toggle" aria-controls="nav-links" aria-expanded="false">
+        <span class="sr-only">Menu</span>
+        <span class="hamburger-bar"></span>
+        <span class="hamburger-bar"></span>
+        <span class="hamburger-bar"></span>
+      </button>
+      <div id="nav-links" class="nav-links">
+        <a href="blog.html" class="nav-item">Blog</a>
+        <hr class="nav-divider">
+        <div id="logged-out-view" class="auth-buttons nav-item">
+          <a href="login.html" class="auth-link">
+             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/><polyline points="10 17 15 12 10 7"/><line x1="15" y1="12" x2="3" y2="12"/></svg>
+            Login
+          </a>
+          <a href="signup.html" class="auth-link">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><line x1="22" y1="8" x2="22" y2="14"/><line x1="19" y1="11" x2="25" y2="11"/></svg>
+            Sign Up
+          </a>
+        </div>
+        <div id="logged-in-view" class="profile-section nav-item hidden">
+          <button id="profile-btn" class="profile-btn">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+          </button>
+          <div id="profile-dropdown" class="profile-dropdown">
+            <div class="user-info">
+              <p>Signed in as:</p>
+              <strong id="user-email">Loading...</strong>
+            </div>
+            <div class="dropdown-actions">
+              <a href="pricing.html" id="upgrade-link" class="upgrade-link hidden">✨ Upgrade to Premium</a>
+              <button id="logout-btn" class="logout-link">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+                Logout
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </nav>
+  </header>
+
+  <main class="main-content">
+    <section class="card auth-card">
+      <h1>Login</h1>
+      <p>Welcome back. Please sign in to your account.</p>
+      
+      <div id="form-error" class="form-error-message" aria-live="polite"></div>
+
+      <form class="auth-form" id="login-form">
+        <div class="form-group">
+          <label for="email">Email</label>
+          <input type="email" id="email" name="email" autocomplete="email" required aria-invalid="false">
+        </div>
+        <div class="form-group">
+          <label for="password">Password</label>
+          <input type="password" id="password" name="password" autocomplete="current-password" required aria-invalid="false">
+        </div>
+        <button type="submit" class="btn-glow">Login</button>
+      </form>
+
+      <div class="form-divider">OR</div>
+
+      <button id="google-login-btn" class="btn-glow google-login-btn">
+        <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" alt="Google icon">
+        Sign in with Google
+      </button>
+
+      <p class="auth-switch-link">
+        Don't have an account? <a href="signup.html">Sign up here</a>.
+      </p>
+      
+    </section>
+  </main>
+
+  <footer class="main-footer">
+    <div class="footer-links">
+      <a href="privacy.html">Privacy Policy</a>
+      <a href="terms.html">Terms & Conditions</a>
+      <a href="contact.html">Contact Us</a>
+    </div>
+    <p>© 2025 RightNow. All rights reserved.</p>
+  </footer>
+
+  <script src="auth-state.js" type="module"></script>
+  <script src="auth.js" type="module"></script>
+</body>
+</html>
