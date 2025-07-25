@@ -1,5 +1,5 @@
 /* ============================================= */
-/* == 1. CSS Variables and Base Setup       == */
+/* == 1. CSS Variables and Base Setup         == */
 /* ============================================= */
 :root {
   --color-bg: #0d1117;
@@ -51,7 +51,7 @@ body.menu-open {
 }
 
 /* ============================================= */
-/* == 2. Animations & Effects             == */
+/* == 2. Animations & Effects                 == */
 /* ============================================= */
 @keyframes gradient-flow {
   0% { background-position: 0% 50%; }
@@ -92,13 +92,20 @@ body.menu-open {
 }
 
 /* ============================================= */
-/* == 3. Core Layout & Global Elements      == */
+/* == 3. Core Layout & Global Elements        == */
 /* ============================================= */
 .main-header, .main-content, .main-footer {
   width: 90%;
   max-width: 800px;
   margin: 0 auto;
   padding: 1rem 0; /* Keep padding consistent */
+}
+
+/* Added for overall main content overflow control */
+.main-content {
+    overflow-x: hidden; /* Hide horizontal scroll if content inside somehow overflows */
+    padding-left: 1rem; /* Add some default padding on the sides */
+    padding-right: 1rem; /* Add some default padding on the sides */
 }
 
 /* Add general responsive image handling */
@@ -159,7 +166,7 @@ body.menu-open .overlay {
   width: 100%;
   transition: border-color 0.3s ease, box-shadow 0.3s ease;
   /* Ensure card content doesn't overflow internally */
-  overflow: hidden;  
+  overflow: hidden; 
 }
 
 .card:hover {
@@ -180,8 +187,8 @@ body.menu-open .overlay {
   position: relative;
   overflow: hidden;
   /* Added to prevent buttons from getting too wide/overflowing if within flex/grid */
-  max-width: 100%;  
-  word-wrap: break-word;  
+  max-width: 100%; 
+  word-wrap: break-word; 
   overflow-wrap: break-word;
 }
 
@@ -206,7 +213,7 @@ body.menu-open .overlay {
 }
 
 /* ============================================= */
-/* == 5. Header & Navigation              == */
+/* == 5. Header & Navigation                  == */
 /* ============================================= */
 .main-header {
   display: flex;
@@ -297,8 +304,8 @@ body.menu-open .nav-links .nav-item {
 }
 body.menu-open .nav-links .nav-item:nth-child(1) { transition-delay: 100ms; }
 body.menu-open .nav-links .nav-item:nth-child(3),
-body.menu-open .nav-links .nav-item:nth-child(4) {  
-  transition-delay: 200ms;  
+body.menu-open .nav-links .nav-item:nth-child(4) { 
+  transition-delay: 200ms; 
 }
 
 .nav-divider {
@@ -310,7 +317,7 @@ body.menu-open .nav-links .nav-item:nth-child(4) {
 }
 
 /* ============================================= */
-/* == 6. Page-Specific Styles             == */
+/* == 6. Page-Specific Styles                 == */
 /* ============================================= */
 /* --- Homepage --- */
 .headline {
@@ -432,7 +439,7 @@ textarea:focus {
   animation: result-card-fade-in 0.5s ease;
   padding: 1.5rem;
   /* Added to prevent inner content from overflowing the container */
-  overflow: hidden;  
+  overflow: hidden; 
 }
 
 .result-item {
@@ -462,9 +469,9 @@ textarea:focus {
 .result-actions {
   display: flex;
   /* Allow buttons to wrap to the next line if space is limited */
-  flex-wrap: wrap;  
+  flex-wrap: wrap; 
   /* Space between buttons */
-  gap: 1rem;  
+  gap: 1rem; 
   margin-top: 1.5rem;
   padding-top: 1.5rem;
   border-top: 1px solid rgba(255, 255, 255, 0.1);
@@ -546,7 +553,7 @@ textarea:focus {
   text-align: center;
   margin-bottom: 3rem;
   /* Added to ensure header content doesn't cause overflow */
-  max-width: 100%;  
+  max-width: 100%; 
   overflow: hidden;
 }
 .page-header h1 {
@@ -621,7 +628,7 @@ textarea:focus {
 }
 
 /* ============================================= */
-/* == 7. Auth Pages (Login/Signup)          == */
+/* == 7. Auth Pages (Login/Signup)            == */
 /* ============================================= */
 .auth-buttons {
   display: flex;
@@ -725,7 +732,7 @@ textarea:focus {
 }
 
 /* ============================================= */
-/* == 8. Profile Menu Styles              == */
+/* == 8. Profile Menu Styles                  == */
 /* ============================================= */
 .profile-section {
   width: 100%;
@@ -931,12 +938,12 @@ textarea:focus {
   display: -webkit-box;
   -webkit-line-clamp: 2;
   line-clamp: 2; 
-  -webkit-box-orient: vertical;   
+  -webkit-box-orient: vertical;   
   overflow: hidden;
-} /* This was the missing closing brace! */
+} 
 
 /* ============================================= */
-/* == 10. Modals                  == */
+/* == 10. Modals                              == */
 /* ============================================= */
 .modal-overlay {
   position: fixed;
@@ -949,7 +956,7 @@ textarea:focus {
   justify-content: center;
   z-index: 1000;
   /* Added to prevent modal from causing overflow */
-  overflow: auto;  
+  overflow: auto; 
 }
 
 .modal-content {
@@ -1032,7 +1039,7 @@ textarea:focus {
 }
 
 /* ============================================= */
-/* == 11. Footer                  == */
+/* == 11. Footer                              == */
 /* ============================================= */
 .main-footer {
   text-align: center;
@@ -1059,7 +1066,7 @@ textarea:focus {
 }
 
 /* ============================================= */
-/* == 12. Media Queries (Desktop)           == */
+/* == 12. Media Queries (Desktop)             == */
 /* ============================================= */
 @media (min-width: 768px) {
 
@@ -1212,7 +1219,7 @@ textarea:focus {
     border: none;
     width: 100%;
     color: var(--color-text-muted);
-    justify-content: flex-start;  
+    justify-content: flex-start; 
   }
   .dropdown-actions .logout-link:hover {
     background-color: rgba(252, 165, 165, 0.1);
