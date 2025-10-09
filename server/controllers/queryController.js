@@ -1,8 +1,6 @@
 const Scenario = require("../models/Scenario");
 const fetch = require("node-fetch");
 
-const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
-
 exports.findScenario = async (req, res) => {
   try {
     const { message } = req.body;
@@ -10,18 +8,6 @@ exports.findScenario = async (req, res) => {
       return res.status(400).json({ message: "A message is required." });
     }
 
-    // --- 1. Keyword Search (Kept your original commented-out code) ---
-    /*
-    const stopWords = new Set(['i', 'me', 'my', 'a', 'an', 'the', 'in', 'is', 'it', 'of', 'for', 'to']);
-    const userKeywords = message.toLowerCase().replace(/[^\w\s]/g, '').split(/\s+/).filter(word => !stopWords.has(word) && word.length > 2);
-
-    if (userKeywords.length > 0) {
-      const potentialMatches = await Scenario.find({ keywords: { $in: userKeywords } });
-      // ... (Add your relevance logic here if needed) ...
-    }
-    */
-
-    // --- 2. AI Query ---
     console.log("Querying AI...");
     const prompt = `
       Analyze the user's situation in India and respond as a raw JSON object with keys: "rights_text", "law_reference", "script".
@@ -37,13 +23,14 @@ exports.findScenario = async (req, res) => {
       throw new Error("Gemini API key is not configured.");
     }
 
+    // THIS IS THE CORRECTED LINE
     const API_URL = `https://generativelanguage.googleapis.com/v1/models/gemini-1.5-flash-latest:generateContent?key=${GEMINI_API_KEY}`;
+
     const apiResponse = await fetch(API_URL, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         contents: [{ parts: [{ text: prompt }] }],
-        // *** THIS IS THE FIX: Adding safety settings to prevent blocking ***
         safetySettings: [
           {
             category: "HARM_CATEGORY_HARASSMENT",
@@ -91,17 +78,14 @@ exports.findScenario = async (req, res) => {
 
     const aiText = aiResponse.candidates[0].content.parts[0].text;
 
-    // Clean the text just in case the AI adds markdown
     const cleanedText = aiText
       .replace(/```json/g, "")
       .replace(/```/g, "")
       .trim();
     const parsedJson = JSON.parse(cleanedText);
 
-    // --- 3. Save to DB ---
     const newScenario = new Scenario({
       title: message,
-      // keywords: userKeywords, // Add back if you use the keyword feature
       rights_text: parsedJson.rights_text,
       law_reference: parsedJson.law_reference,
       script: parsedJson.script,
