@@ -1,13 +1,13 @@
-const Scenario = require('../models/Scenario');
-const fetch = require('node-fetch');
+const Scenario = require("../models/Scenario");
+const fetch = require("node-fetch");
 
-const sleep = (ms) => new Promise(resolve => setTimeout(resolve, ms));
+const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
 exports.findScenario = async (req, res) => {
   try {
     const { message } = req.body;
     if (!message) {
-      return res.status(400).json({ message: 'A message is required.' });
+      return res.status(400).json({ message: "A message is required." });
     }
 
     // --- 1. Keyword Search (Kept your original commented-out code) ---
@@ -31,58 +31,71 @@ exports.findScenario = async (req, res) => {
       User's situation: "${message}"
       JSON Response:
     `;
-    
+
     const GEMINI_API_KEY = process.env.GEMINI_API_KEY;
     if (!GEMINI_API_KEY) {
-      throw new Error('Gemini API key is not configured.');
+      throw new Error("Gemini API key is not configured.");
     }
-    
-    const API_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent?key=${GEMINI_API_KEY}`;
-    
+
+    const API_URL = `https://generativelanguage.googleapis.com/v1/models/gemini-1.5-flash-latest:generateContent?key=${GEMINI_API_KEY}`;
     const apiResponse = await fetch(API_URL, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         contents: [{ parts: [{ text: prompt }] }],
         // *** THIS IS THE FIX: Adding safety settings to prevent blocking ***
         safetySettings: [
-            {
-                "category": "HARM_CATEGORY_HARASSMENT",
-                "threshold": "BLOCK_NONE"
-            },
-            {
-                "category": "HARM_CATEGORY_HATE_SPEECH",
-                "threshold": "BLOCK_NONE"
-            },
-            {
-                "category": "HARM_CATEGORY_SEXUALLY_EXPLICIT",
-                "threshold": "BLOCK_NONE"
-            },
-            {
-                "category": "HARM_CATEGORY_DANGEROUS_CONTENT",
-                "threshold": "BLOCK_NONE"
-            }
-        ]
-      })
+          {
+            category: "HARM_CATEGORY_HARASSMENT",
+            threshold: "BLOCK_NONE",
+          },
+          {
+            category: "HARM_CATEGORY_HATE_SPEECH",
+            threshold: "BLOCK_NONE",
+          },
+          {
+            category: "HARM_CATEGORY_SEXUALLY_EXPLICIT",
+            threshold: "BLOCK_NONE",
+          },
+          {
+            category: "HARM_CATEGORY_DANGEROUS_CONTENT",
+            threshold: "BLOCK_NONE",
+          },
+        ],
+      }),
     });
 
     if (!apiResponse.ok) {
-        const errorText = await apiResponse.text();
-        console.error("Gemini API Error Response:", errorText);
-        throw new Error(`Gemini API responded with status: ${apiResponse.status}`);
+      const errorText = await apiResponse.text();
+      console.error("Gemini API Error Response:", errorText);
+      throw new Error(
+        `Gemini API responded with status: ${apiResponse.status}`
+      );
     }
 
     const aiResponse = await apiResponse.json();
 
-    if (!aiResponse.candidates || aiResponse.candidates.length === 0 || !aiResponse.candidates[0].content) {
-        console.error("Gemini Response Blocked or Invalid:", JSON.stringify(aiResponse, null, 2));
-        throw new Error('AI response was blocked or empty, likely due to safety filters.');
+    if (
+      !aiResponse.candidates ||
+      aiResponse.candidates.length === 0 ||
+      !aiResponse.candidates[0].content
+    ) {
+      console.error(
+        "Gemini Response Blocked or Invalid:",
+        JSON.stringify(aiResponse, null, 2)
+      );
+      throw new Error(
+        "AI response was blocked or empty, likely due to safety filters."
+      );
     }
 
     const aiText = aiResponse.candidates[0].content.parts[0].text;
-    
+
     // Clean the text just in case the AI adds markdown
-    const cleanedText = aiText.replace(/```json/g, '').replace(/```/g, '').trim();
+    const cleanedText = aiText
+      .replace(/```json/g, "")
+      .replace(/```/g, "")
+      .trim();
     const parsedJson = JSON.parse(cleanedText);
 
     // --- 3. Save to DB ---
@@ -91,15 +104,16 @@ exports.findScenario = async (req, res) => {
       // keywords: userKeywords, // Add back if you use the keyword feature
       rights_text: parsedJson.rights_text,
       law_reference: parsedJson.law_reference,
-      script: parsedJson.script
+      script: parsedJson.script,
     });
-    
+
     await newScenario.save();
 
     res.status(200).json(parsedJson);
-
   } catch (error) {
-    console.error("!!! FATAL ERROR in findScenario:", error); 
-    res.status(500).json({ message: 'A server error occurred. Please try again.' });
+    console.error("!!! FATAL ERROR in findScenario:", error);
+    res
+      .status(500)
+      .json({ message: "A server error occurred. Please try again." });
   }
 };
