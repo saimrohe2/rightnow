@@ -24,7 +24,7 @@ exports.findScenario = async (req, res) => {
     }
 
     // THIS IS THE CORRECTED LINE
-    const API_URL = `https://generativelanguage.googleapis.com/v1/models/gemini-1.5-flash-latest:generateContent?key=${GEMINI_API_KEY}`;
+    const API_URL = `https://generativelanguage.googleapis.com/v1/models/gemini-pro:generateContent?key=${GEMINI_API_KEY}`;
 
     const apiResponse = await fetch(API_URL, {
       method: "POST",
