@@ -23,8 +23,7 @@ exports.findScenario = async (req, res) => {
       throw new Error("Gemini API key is not configured.");
     }
 
-    // THIS IS THE CORRECTED LINE
-    const API_URL = `https://generativelanguage.googleapis.com/v1/models/gemini-1.5-flash-latest:generateContent?key=${GEMINI_API_KEY}`;
+    const API_URL = `https://generativelanguage.googleapis.com/v1/models/gemini-pro:generateContent?key=${GEMINI_API_KEY}`;
 
     const apiResponse = await fetch(API_URL, {
       method: "POST",
@@ -32,22 +31,10 @@ exports.findScenario = async (req, res) => {
       body: JSON.stringify({
         contents: [{ parts: [{ text: prompt }] }],
         safetySettings: [
-          {
-            category: "HARM_CATEGORY_HARASSMENT",
-            threshold: "BLOCK_NONE",
-          },
-          {
-            category: "HARM_CATEGORY_HATE_SPEECH",
-            threshold: "BLOCK_NONE",
-          },
-          {
-            category: "HARM_CATEGORY_SEXUALLY_EXPLICIT",
-            threshold: "BLOCK_NONE",
-          },
-          {
-            category: "HARM_CATEGORY_DANGEROUS_CONTENT",
-            threshold: "BLOCK_NONE",
-          },
+          { category: "HARM_CATEGORY_HARASSMENT", threshold: "BLOCK_NONE" },
+          { category: "HARM_CATEGORY_HATE_SPEECH", threshold: "BLOCK_NONE" },
+          { category: "HARM_CATEGORY_SEXUALLY_EXPLICIT", threshold: "BLOCK_NONE" },
+          { category: "HARM_CATEGORY_DANGEROUS_CONTENT", threshold: "BLOCK_NONE" },
         ],
       }),
     });
@@ -55,33 +42,18 @@ exports.findScenario = async (req, res) => {
     if (!apiResponse.ok) {
       const errorText = await apiResponse.text();
       console.error("Gemini API Error Response:", errorText);
-      throw new Error(
-        `Gemini API responded with status: ${apiResponse.status}`
-      );
+      throw new Error(`Gemini API responded with status: ${apiResponse.status}`);
     }
 
     const aiResponse = await apiResponse.json();
 
-    if (
-      !aiResponse.candidates ||
-      aiResponse.candidates.length === 0 ||
-      !aiResponse.candidates[0].content
-    ) {
-      console.error(
-        "Gemini Response Blocked or Invalid:",
-        JSON.stringify(aiResponse, null, 2)
-      );
-      throw new Error(
-        "AI response was blocked or empty, likely due to safety filters."
-      );
+    if (!aiResponse.candidates || aiResponse.candidates.length === 0 || !aiResponse.candidates[0].content) {
+      console.error("Gemini Response Blocked or Invalid:", JSON.stringify(aiResponse, null, 2));
+      throw new Error("AI response was blocked or empty.");
     }
 
     const aiText = aiResponse.candidates[0].content.parts[0].text;
-
-    const cleanedText = aiText
-      .replace(/```json/g, "")
-      .replace(/```/g, "")
-      .trim();
+    const cleanedText = aiText.replace(/```json/g, "").replace(/```/g, "").trim();
     const parsedJson = JSON.parse(cleanedText);
 
     const newScenario = new Scenario({
@@ -90,14 +62,11 @@ exports.findScenario = async (req, res) => {
       law_reference: parsedJson.law_reference,
       script: parsedJson.script,
     });
-
     await newScenario.save();
 
     res.status(200).json(parsedJson);
   } catch (error) {
     console.error("!!! FATAL ERROR in findScenario:", error);
-    res
-      .status(500)
-      .json({ message: "A server error occurred. Please try again." });
+    res.status(500).json({ message: "A server error occurred. Please try again." });
   }
 };
