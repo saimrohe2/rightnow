@@ -28,15 +28,15 @@ onAuthStateChanged(auth, async (user) => {
     try {
       const token = await user.getIdToken();
       
-      // Fetch subscription status
-      const statusResponse = await fetch('http://localhost:5000/api/user/status', {
+      // UPDATED: Fetch subscription status from Render
+      const statusResponse = await fetch('https://rightnow-backend.onrender.com/api/user/status', {
         headers: { 'Authorization': `Bearer ${token}` }
       });
       const statusData = await statusResponse.json();
       updateSubscriptionStatus(statusData.subscriptionStatus);
 
-      // Fetch saved rights
-      const rightsResponse = await fetch('http://localhost:5000/api/user/saved-rights', {
+      // UPDATED: Fetch saved rights from Render
+      const rightsResponse = await fetch('https://rightnow-backend.onrender.com/api/user/saved-rights', {
         headers: { 'Authorization': `Bearer ${token}` }
       });
       const savedRights = await rightsResponse.json();
