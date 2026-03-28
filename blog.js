@@ -2,7 +2,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const articlesContainer = document.getElementById("articles-container");
   const articleContent = document.getElementById("article-content");
   // UPDATED: API_BASE_URL to point to your deployed Render backend API
-  const API_BASE_URL = "https://api-kv64qjxqea-uc.a.run.app/api/articles";
+  const API_BASE_URL = "https://rightnow-backend.onrender.com/api/articles";
 
   // Check if we are on the main blog page or a single article page
   if (articlesContainer) {
