@@ -1,7 +1,7 @@
 document.addEventListener("DOMContentLoaded", () => {
   // 1. Configuration & Constants
   const config = {
-    API_BASE_URL: "https://api-kv64qjxqea-uc.a.run.app/api",
+    API_BASE_URL: "https://rightnow-backend.onrender.com/api",
   };
   const constants = {
     BUTTON_TEXT: {
