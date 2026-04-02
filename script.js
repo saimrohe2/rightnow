@@ -1,5 +1,8 @@
 document.addEventListener("DOMContentLoaded", () => {
   // 1. Configuration & Constants
+  const config = {
+    API_BASE_URL: "https://rightnow-backend.onrender.com/api",
+  };
   const constants = {
     BUTTON_TEXT: {
       DEFAULT: "Find My Rights",
@@ -8,8 +11,7 @@ document.addEventListener("DOMContentLoaded", () => {
       EXPLAIN_LOADING: "Thinking...",
     },
   }; // 2. DOM Element Selection
-// Initialize EmailJS globally at the start
-emailjs.init("FG75M-pYJheDnorvv");
+
   const elements = {
     homeView: document.getElementById("home-view"),
     resultsView: document.getElementById("results-view"),
