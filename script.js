@@ -1,8 +1,5 @@
 document.addEventListener("DOMContentLoaded", () => {
   // 1. Configuration & Constants
-  const config = {
-    API_BASE_URL: "https://rightnow-backend.onrender.com/api",
-  };
   const constants = {
     BUTTON_TEXT: {
       DEFAULT: "Find My Rights",
